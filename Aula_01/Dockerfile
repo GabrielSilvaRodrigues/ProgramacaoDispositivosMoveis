@@ -33,17 +33,23 @@ RUN mkdir -p /home/developer/.vnc
 # Configuração VNC e Supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY xstartup /home/developer/.vnc/xstartup
+COPY start-vnc.sh /usr/local/bin/start-vnc.sh
 RUN chmod +x /home/developer/.vnc/xstartup && \
+    chmod +x /usr/local/bin/start-vnc.sh && \
     chown -R developer:developer /home/developer/.vnc
 
 # Configurar senha VNC
 USER developer
 WORKDIR /home/developer
-RUN vncserver :1 -kill || true && \
+RUN mkdir -p .vnc && \
     echo "android" | vncpasswd -f > .vnc/passwd && \
     chmod 600 .vnc/passwd
 
 USER root
+
+# Configurar variáveis de ambiente
+ENV VNC_PORT=5901
+ENV NOVNC_PORT=6080
 
 EXPOSE 5901 6080
 
