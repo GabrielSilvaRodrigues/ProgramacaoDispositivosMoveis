@@ -1,0 +1,13 @@
+version: "3"
+services:
+  androidstudio:
+    build: .
+    ports:
+      - "5901:5901"
+      - "6080:6080"
+    volumes:
+      - ./aula_01:/home/developer/aula_01
+    environment:
+      - USER=developer
+      - PASSWORD=developer
+    shm_size: 2g
