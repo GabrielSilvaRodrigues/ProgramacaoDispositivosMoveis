@@ -1,13 +1,19 @@
 #!/bin/bash
 
+# Limpar variáveis de sessão
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
+# Configurar ambiente XFCE
 export XDG_CURRENT_DESKTOP="XFCE"
 export XDG_MENU_PREFIX="xfce-"
 export XDG_CONFIG_DIRS="/etc/xdg/xdg-xfce:/etc/xdg"
 
-xrdb $HOME/.Xresources 2>/dev/null
+# Carregar recursos X
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+
+# Configurar fundo
 xsetroot -solid grey
-x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
-startxfce4 &
+
+# Iniciar XFCE
+exec startxfce4

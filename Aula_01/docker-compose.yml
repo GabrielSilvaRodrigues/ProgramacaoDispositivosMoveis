@@ -12,6 +12,13 @@ services:
       - DISPLAY=:1
       - USER=developer
       - HOME=/home/developer
+      - VNC_RESOLUTION=1280x800
     shm_size: 2g
     privileged: false
     restart: unless-stopped
+    networks:
+      - vnc-network
+
+networks:
+  vnc-network:
+    driver: bridge

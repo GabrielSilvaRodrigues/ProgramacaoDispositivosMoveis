@@ -11,7 +11,7 @@ RUN apt-get update && \
     apt-get install -y tzdata wget curl unzip git supervisor \
     xfce4 xfce4-goodies tightvncserver novnc websockify \
     openjdk-17-jdk libcanberra-gtk-module libglu1-mesa \
-    dbus-x11 xfonts-base xauth x11vnc && \
+    dbus-x11 xfonts-base xauth x11vnc firefox && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar Android Studio
@@ -26,22 +26,24 @@ RUN useradd -m developer && \
     mkdir -p /home/developer/.vnc /var/log/supervisor && \
     chown -R developer:developer /home/developer
 
-# Configurar senha VNC
-USER developer
-WORKDIR /home/developer
-RUN mkdir -p .vnc && \
-    echo "android" | vncpasswd -f > .vnc/passwd && \
-    chmod 600 .vnc/passwd && \
-    echo "#!/bin/bash\nstartxfce4 &" > .vnc/xstartup && \
-    chmod +x .vnc/xstartup
-
+# Configurar VNC como root primeiro
 USER root
+RUN mkdir -p /home/developer/.vnc
 
 # Configuração VNC e Supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY xstartup /home/developer/.vnc/xstartup
 RUN chmod +x /home/developer/.vnc/xstartup && \
-    chown developer:developer /home/developer/.vnc/xstartup
+    chown -R developer:developer /home/developer/.vnc
+
+# Configurar senha VNC
+USER developer
+WORKDIR /home/developer
+RUN vncserver :1 -kill || true && \
+    vncpasswd -f <<< "android" > .vnc/passwd && \
+    chmod 600 .vnc/passwd
+
+USER root
 
 EXPOSE 5901 6080
 
