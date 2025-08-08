@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   androidstudio:
     build: .
@@ -6,8 +6,12 @@ services:
       - "5901:5901"
       - "6080:6080"
     volumes:
-      - ./aula_01:/home/developer/aula_01
+      - ./workspace:/home/developer/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
     environment:
+      - DISPLAY=:1
       - USER=developer
-      - PASSWORD=developer
+      - HOME=/home/developer
     shm_size: 2g
+    privileged: false
+    restart: unless-stopped

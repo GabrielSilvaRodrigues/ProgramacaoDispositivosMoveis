@@ -1,3 +1,13 @@
-#!/bin/sh
-xrdb $HOME/.Xresources
+#!/bin/bash
+
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+
+export XDG_CURRENT_DESKTOP="XFCE"
+export XDG_MENU_PREFIX="xfce-"
+export XDG_CONFIG_DIRS="/etc/xdg/xdg-xfce:/etc/xdg"
+
+xrdb $HOME/.Xresources 2>/dev/null
+xsetroot -solid grey
+x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
 startxfce4 &
