@@ -40,7 +40,7 @@ RUN chmod +x /home/developer/.vnc/xstartup && \
 USER developer
 WORKDIR /home/developer
 RUN vncserver :1 -kill || true && \
-    vncpasswd -f <<< "android" > .vnc/passwd && \
+    echo "android" | vncpasswd -f > .vnc/passwd && \
     chmod 600 .vnc/passwd
 
 USER root
