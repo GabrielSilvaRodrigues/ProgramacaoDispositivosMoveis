@@ -1,0 +1,17 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  android-studio:
+    build: .
+    ports:
+      - "6080:6080"
+      - "5900:5900"
+    volumes:
+      - ./projects:/workspace
+      - android-sdk:/opt/android-sdk
+    environment:
+      - DISPLAY=:1
+      - VNC_PASSWORD=password
+
+volumes:
+  android-sdk:
