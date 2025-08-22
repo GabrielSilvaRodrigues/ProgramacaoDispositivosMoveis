@@ -26,8 +26,9 @@ class MainActivity : AppCompatActivity() {
 
         buttonIniciar.setOnClickListener {
             val Peso = editTextPeso.text.toString().toDouble()
-            val PesAltura = editTextPeso.text.toString().toDouble()
+            val Altura = editTextAltura.text.toString().toDouble()
+            val Imc = Peso / (Altura * Altura)
+            textViewResultado.text = "Seu IMC é $Imc"
         }
-
     }
 }
