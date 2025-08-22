@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">MyFirstApp</string>
-    <string name="bem_vindo">Bem-Vindo  oi!</string>
-    <string name="iniciar">Iniciar</string>
-    <string name="name">Name</string>
-    <string name="name2">Name</string>
+    <string name="bem_vindo">Bem-Vindo!</string>
+    <string name="iniciar">Calcular</string>
+    <string name="name">Peso</string>
+    <string name="name2">Altura</string>
+    <string name="resultado">Resultado</string>
 </resources>
